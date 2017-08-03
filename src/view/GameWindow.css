@@ -1,0 +1,93 @@
+#gameWindow {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+#gameWindow .gameWindow_title {
+	width: 100%;
+	height: 40px;
+	margin-top: 10px;
+}
+
+#gameWindow .title_left {
+	width: 100px;
+	height: 20px;
+	float: left;
+	margin: 10px;
+	color: #b7dbf6;
+}
+
+#gameWindow .title_right {
+	width: 130px;
+	height: 46px;
+	float: right;
+	margin-right: 10px;
+	background: url(../../images/star_bg.png);
+	background-size: contain;
+	color: #168dda;
+	font-weight: bold;
+}
+
+#gameWindow .title_right span {
+	display: block;
+	width: 20px;
+	height: 40px;
+	font-size: 20px;
+	margin: 0 auto;
+	line-height: 40px;
+}
+
+#gameWindow .gameWindow_score {
+	width: 150px;
+	height: 40px;
+	margin: 10px auto;
+	font-size: 40px;
+	text-align: center;
+	font-weight: bold;
+    color: #fe8a8a;
+}
+
+#gameWindow .gameWindow_count {
+	width: 300px;
+	height: 30px;
+	margin: 0 auto;
+	background: url(../../images/progress.png);
+}
+
+
+#gameWindow .gameWindow_rect {
+	width: 306px;
+	height: 306px;
+	background-color: #eeeeec;
+	margin: 10px auto;
+	position: relative;
+	border-radius: 5px;
+}
+
+.RectItem{
+	position:absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+	text-align: center;
+	line-height: 60px;
+    width: 60px;
+    height: 60px;
+    /*background: #000000;*/
+}
+
+.RectItem_content{
+	color: #ffffff;
+    font-size: 30px;
+    font-weight: bold;
+	width: 56px;
+	height: 56px;
+	position: absolute;
+	top:5px;
+	left:5px;
+	border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+}

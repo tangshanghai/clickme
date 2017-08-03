@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script type="text/javascript">
+        var phoneWidth =  parseInt(window.screen.width);
+        var phoneScale = phoneWidth/320;
+        var ua = navigator.userAgent;
+        if (/Android (\d+\.\d+)/.test(ua)){
+            var version = parseFloat(RegExp.$1);
+            if(version>2.3){
+                document.write('<meta name="viewport" content="width=320, minimum-scale = ‘+phoneScale+‘, maximum-scale = ‘+phoneScale+‘, target-densitydpi=device-dpi">');
+            }else{
+                document.write('<meta name="viewport" content="width=320, target-densitydpi=device-dpi">');
+            }
+        } else {
+            document.write('<meta name="viewport" content="width=320, user-scalable=no, target-densitydpi=device-dpi">');
+        }
+    </script>
+    <title></title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            font-size:12px;
+        }
+        html,body{
+            width:100%;
+            height:100%;
+        }
+        #page{
+            position: relative;
+            width:100%;
+            height:100%;
+        }
+        #gameWindow{
+            width:100%;
+            height:100%;
+            overflow: hidden;
+        }
+        #gameWindow .gameWindow_title{
+            width:100%;
+            height:40px;
+            margin-top:10px;
+        }
+        #gameWindow .title_left{
+            width: 100px;
+            height: 20px;
+            float: left;
+            margin: 10px;
+        }
+        #gameWindow .title_right{
+            width: 130px;
+            height: 46px;
+            float: right;
+            margin-right:10px;
+            background: url(images/star_bg.png);
+            background-size: contain;
+        }
+        #gameWindow .title_right span{
+            display: block;
+            width: 20px;
+            height: 40px;
+            font-size: 20px;
+            margin: 0 auto;
+            line-height: 40px;
+        }
+        #gameWindow .gameWindow_score{
+            width: 150px;
+            height: 40px;
+            margin: 10px auto;
+            font-size: 40px;
+            text-align: center;
+        }
+        #gameWindow .gameWindow_count{
+            width: 100%;
+            height: 26px;
+            margin: 5px auto;
+        }
+        #gameWindow .gameWindow_count ul{
+            list-style: none;
+            width: 300px;
+            height: 100%;
+            margin: 0 auto;
+            background-color: #eeeeec;
+            border-radius: 20px;
+        }
+        #gameWindow .gameWindow_count ul li{
+            width: 50px;
+            height: 20px;
+            margin: 3px 0px 0px 8px;
+            float: left;
+            background-color: #a7e0fe;
+            border-radius: 15px;
+        }
+        #gameWindow .gameWindow_rect{
+            width: 300px;
+            height: 300px;
+            background-color: #eeeeec;
+            margin: 10px auto;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<div id="page">
+    <div id="gameWindow">
+        <div class="gameWindow_title">
+            <div class="title_left">
+                最高13903
+            </div>
+            <div class="title_right">
+                <span>5</span>
+            </div>
+        </div>
+        <div class="gameWindow_score">
+            1232131
+        </div>
+        <div class="gameWindow_count">
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <div class="gameWindow_rect">
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

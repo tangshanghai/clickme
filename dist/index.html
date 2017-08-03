@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+        <script type="text/javascript">
+            var phoneWidth =  parseInt(window.screen.width);
+            var phoneScale = phoneWidth/320;
+            var ua = navigator.userAgent;
+            if (/Android (\d+\.\d+)/.test(ua)){
+                var version = parseFloat(RegExp.$1);
+                if(version>2.3){
+                    document.write('<meta name="viewport" content="width=320, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
+                }else{
+                    document.write('<meta name="viewport" content="width=320, target-densitydpi=device-dpi">');
+                }
+            } else {
+                document.write('<meta name="viewport" content="width=320, user-scalable=no, target-densitydpi=device-dpi">');
+            }
+        </script>
+        <!--<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>-->
+		<title>点我加1</title>
+		<style>
+            *{
+                margin:0;
+                padding:0;
+            }
+            html,body{
+                width:100%;
+                height:100%;
+            }
+        </style>
+		<!--<script type="text/javascript" src="../src/jquery.js"></script>-->
+	</head>
+	<body>
+		<script type="text/javascript" src="./index.js" ></script>
+		<script>
+//            let mapArr = new Array();
+//            for(let i=0;i<5;i++){
+//                let temparr = new Array();
+//                for(let j=0;j<5;j++){
+//                    let v = Math.floor(Math.random()*3)+1;
+//                    temparr.push(v);
+//                }
+//                console.log(temparr);
+//                mapArr.push(temparr);
+//            }
+//            console.log("去除三个值相同的")
+//            RemoveThree(mapArr);
+//            for(let i=0;i<mapArr.length;i++){
+//                console.log(mapArr[i]);
+//            }
+//
+//            function RemoveThree(arr){
+//                for(let i=0;i<arr.length;i++){
+//                    let temparr = arr[i];
+//                    for(let j=0;j<temparr.length;j++){
+//
+//                        //横向查找
+//                        let h1 = temparr[j];
+//                        let h2 = j-1>=0?temparr[j-1]:0;
+//                        let h3 = j+1<=temparr.length-1?temparr[j+1]:0;
+//                        if(h1 == h2 && h2 == h3){
+//                            arr[i][j] = Math.floor(Math.random()*3)+1;
+//                            j--;
+//                            console.log(temparr[j]+"aaaaa");
+//                        }
+//                        //竖向查找
+//                        let v1 = arr[j][i];
+//                        let v2 = j-1>=0?arr[j-1][i]:0;
+//                        let v3 = j+1<=temparr.length-1?arr[j+1][i]:0;
+//                        if(v1 == v2 == v3){
+//                            arr[j][i] = Math.floor(Math.random()*3)+1;
+//                            i--;
+//                        }
+//                    }
+//
+//                }
+//            }
+		</script>
+	</body>
+</html>
