@@ -19,7 +19,7 @@ module.exports = {
                 loader: 'babel-loader',
                 exclude: /node_modules/,
                 query: {
-                    presets: ['es2015']
+                    presets: ['es2015', "stage-0"]
                 }
             },
             {
@@ -29,6 +29,10 @@ module.exports = {
             {
                 test: /\.css$/,
                 loader: 'style-loader!css-loader'
+            },
+            {
+                test: /\.html$/,
+                loader: 'html-loader'
             }
             //,
             //{

@@ -15,6 +15,14 @@
 	height:auto;
 }
 
+.Explain_movie{
+	border-radius: 5px;
+	background:rgba(0,0,0,0.5);
+	animation: pauseMovie 2s infinite linear;
+    -moz-animation: pauseMovie 2s infinite linear;	/* Firefox */
+    -webkit-animation: pauseMovie 2s infinite linear;	/* Safari 和 Chrome */
+    -o-animation: pauseMovie 2s infinite linear;	/* Opera */
+}
 .Explain_level1{
 	position: absolute;
 	top: 220px;
@@ -61,4 +69,57 @@
     width: 20px;
     height: 20px;
     /*background: #A7E0FE;*/
+}
+
+
+@keyframes pauseMovie
+{
+    0%   {
+        opacity: 0;
+    }
+    50%  {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes pauseMovie /* Firefox */
+{
+    0%   {
+        opacity: 0;
+    }
+    50%  {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes pauseMovie /* Safari 和 Chrome */
+{
+    0%   {
+        opacity: 0;
+    }
+    50%  {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-o-keyframes pauseMovie /* Opera */
+{
+    0%   {
+        opacity: 0;
+    }
+    50%  {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }

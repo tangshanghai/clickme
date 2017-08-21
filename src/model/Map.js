@@ -1,5 +1,6 @@
 import $ from "jquery";
 import GameControl from "../control/GameControl.js";
+import GameModel from "../model/GameModel.js";
 
 class Map{
 	constructor(){
@@ -15,11 +16,14 @@ class Map{
         if(obj == null) return;
         let i = obj.i,j=obj.j;
         this.Maps[i][j]++;
+        let composeNum = this.Maps[i][j];
         let arr = this.findThree(i,j);
         if(arr == null){
             console.log("未查找到三连线！");
+            GameModel.addOrRemoveLife(false);
         }else{
             GameControl.RectItemLock({isLock:true});
+            GameModel.composeNumber(composeNum,arr.length,false);
             this.startMove(arr,i,j);
         }
     }
@@ -70,7 +74,8 @@ class Map{
                         isRemove:false
                     });
                 }else{
-                    this.Maps[i][j] = Math.floor(Math.random()*this.range)+1;
+                	let rangeNum = GameModel.compose;
+                    this.Maps[i][j] = (Math.floor(Math.random()*5)+1)+(rangeNum-5);//Math.floor(Math.random()*this.range)+1;
                     GameControl.CreateItem({
                         v:this.Maps[i][j],
                         i:i,
@@ -90,12 +95,16 @@ class Map{
                 let arr = this.findThree(i,j);
                 if(arr != null){
                     GameControl.RectItemLock({isLock:true});
+                    let composeNum = this.Maps[i][j];
+                    GameModel.composeNumber(composeNum,arr.length,true);
                     this.startMove(arr,i,j);
+                    GameModel.addOrRemoveLife(true);//第二次加载需要续一次命
                     return;
                 }
             }
         }
         GameControl.RectItemLock({isLock:false});
+        //console.log("查找完成，需要告知现在的分数与合成值")
     }
     findThree(i,j){
         let cv = this.Maps[i][j];
@@ -184,18 +193,18 @@ class Map{
                 let bottom = i+1<=arr.length-1?arr[i+1][j]:-1;
 
                 if(c == left && left == right){
-                    console.log("横向查找",i,j,c+":"+left+":"+right);
+                    //console.log("横向查找",i,j,c+":"+left+":"+right);
                     c = arr[i][j]++;// = Math.floor(Math.random()*this.range)+1;
                     if(c == top && top == bottom){
-                        console.log("竖向查找2",i,j)
+                        //console.log("竖向查找2",i,j)
                         c = arr[i][j]++;// = Math.floor(Math.random()*this.range)+1;
                     }
                     j--;
                 }else if(c == top && top == bottom){
-                    console.log("竖向查找",i,j,c+":"+top+":"+bottom)
+                    //console.log("竖向查找",i,j,c+":"+top+":"+bottom)
                     c = arr[i][j]++;// = Math.floor(Math.random()*this.range)+1;
                     if(c == left && left == right){
-                        console.log("横向查找2",i,j);
+                        //console.log("横向查找2",i,j);
                         c = arr[i][j]++;// = Math.floor(Math.random()*this.range)+1;
                     }
                     i--;

@@ -4,7 +4,7 @@ import "./explain.css";
 class Explain{
 	constructor(_callback){
 		this.root = $("<div></div>");
-		let html = '<div class="Explain_imgbox"><img class="Explain_img" src="./images/1.png"/></div><div class="Explain_level1"></div><div class="Explain_level2"></div><div class="Explain_level3"></div><div class="Explain_level4"></div><div class="Explain_close"></div>';
+		let html = '<div class="Explain_imgbox"><img class="Explain_img" src="./images/1.png"/></div><div class="Explain_level1 Explain_movie"></div><div class="Explain_level2 Explain_movie"></div><div class="Explain_level3 Explain_movie"></div><div class="Explain_level4 Explain_movie"></div><div class="Explain_close"></div>';
 		
 		this.root.append(html);
 		this.root.addClass("Explain");

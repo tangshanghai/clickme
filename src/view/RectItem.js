@@ -4,6 +4,7 @@
 import $ from "jquery";
 import Configuration from "../model/Configuration.js";
 import GameControl from "../control/GameControl.js";
+import GameModel from "../model/GameModel.js";
 
 class RectItem{
     constructor(_obj){
@@ -116,6 +117,8 @@ class RectItem{
 
     removeSelf(){
         GameControl.removeEventListener(GameControl.RECTITEM_LOCK,this.lockHandler.bind(this));
+        GameControl.removeEventListener(GameControl.MOVE_TO,this.moveToHandler.bind(this));
+        GameControl.removeEventListener(GameControl.UPDATE_ITEM,this.updateItemHandler.bind(this));
         this.root.remove();
         console.log("asdfasfasfasfasfafdd")
     }

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10339,7 +10339,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Event2 = __webpack_require__(6);
+var _Event2 = __webpack_require__(5);
 
 var _Event3 = _interopRequireDefault(_Event2);
 
@@ -10362,16 +10362,57 @@ var GameControl = function (_Event) {
 
         var _this = _possibleConstructorReturn(this, (GameControl.__proto__ || Object.getPrototypeOf(GameControl)).call(this));
 
+        _this.SCORE_CHANGE = "score_change";
+        _this.SCORE_HIGH_CHANGE = "score_high_change";
+        _this.LIFE_CHANGE = "life_change";
+        _this.COMPOSE_CHANGE = "compose_change";
+        _this.GAME_OVER = "game_over";
+
         _this.RECTITEM_CLICK = "rectItem_click";
         _this.START_CLEAR = "start_click";
         _this.RECTITEM_LOCK = "rectItem_lock";
         _this.MOVE_TO = "move_to";
         _this.UPDATE_ITEM = "update_item";
         _this.CREATE_ITEM = "create_item";
+
+        _this.BACK_TOMAIN = "back_tomain";
+        _this.GAME_RESET = "game_reset";
         return _this;
     }
 
+    //得分改变
+
+
     _createClass(GameControl, [{
+        key: "ScoreChange",
+        value: function ScoreChange(_obj) {
+            this.dispatchEvent(this.SCORE_CHANGE, _obj);
+        }
+
+        //最高分改变
+
+    }, {
+        key: "ScoreHighChange",
+        value: function ScoreHighChange(_obj) {
+            this.dispatchEvent(this.SCORE_HIGH_CHANGE, _obj);
+        }
+
+        //生命改变
+
+    }, {
+        key: "LifeChange",
+        value: function LifeChange(_obj) {
+            this.dispatchEvent(this.LIFE_CHANGE, _obj);
+        }
+
+        //合成数改变
+
+    }, {
+        key: "ComposeChange",
+        value: function ComposeChange(_obj) {
+            this.dispatchEvent(this.COMPOSE_CHANGE, _obj);
+        }
+    }, {
         key: "RectItemClick",
         value: function RectItemClick(_obj) {
             this.dispatchEvent(this.RECTITEM_CLICK, _obj);
@@ -10401,6 +10442,34 @@ var GameControl = function (_Event) {
         key: "StartClear",
         value: function StartClear(_obj) {
             this.dispatchEvent(this.START_CLEAR, _obj);
+        }
+
+        /*
+         *游戏结束
+         * */
+
+    }, {
+        key: "GameOver",
+        value: function GameOver(_obj) {
+            this.dispatchEvent(this.GAME_OVER, _obj);
+        }
+        /*
+         * 回到主页
+         */
+
+    }, {
+        key: "backToMain",
+        value: function backToMain(_obj) {
+            this.dispatchEvent(this.BACK_TOMAIN, _obj);
+        }
+        /*
+            * 重玩游戏
+            */
+
+    }, {
+        key: "resetGame",
+        value: function resetGame(_obj) {
+            this.dispatchEvent(this.GAME_RESET, _obj);
         }
     }]);
 
@@ -10538,7 +10607,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(23);
+var	fixUrls = __webpack_require__(27);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -10858,91 +10927,136 @@ function updateLink (link, options, obj) {
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jquery = __webpack_require__(0);
+var _Event2 = __webpack_require__(5);
 
-var _jquery2 = _interopRequireDefault(_jquery);
+var _Event3 = _interopRequireDefault(_Event2);
 
-var _GameWindow = __webpack_require__(9);
+var _GameControl = __webpack_require__(1);
 
-var _GameWindow2 = _interopRequireDefault(_GameWindow);
-
-var _StartWindow = __webpack_require__(14);
-
-var _StartWindow2 = _interopRequireDefault(_StartWindow);
-
-var _Explain = __webpack_require__(12);
-
-var _Explain2 = _interopRequireDefault(_Explain);
+var _GameControl2 = _interopRequireDefault(_GameControl);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Main = function () {
-	function Main() {
-		_classCallCheck(this, Main);
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-		this.root = (0, _jquery2.default)("<div></div>");
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-		this.root.css({
-			width: "100%",
-			height: "100%"
-		});
+var GameModel = function (_Event) {
+  _inherits(GameModel, _Event);
 
-		//		this.sw = new StartWindow(this.startGame.bind(this));
-		//		this.root.append(this.sw.root);
-		var gw = new _GameWindow2.default();
-		this.root.append(gw.root);
-	}
+  function GameModel() {
+    _classCallCheck(this, GameModel);
 
-	_createClass(Main, [{
-		key: "startGame",
-		value: function startGame(d) {
-			console.log("开始教学。。。。");
-			this.ex = new _Explain2.default(this.startGame2.bind(this));
-			this.root.append(this.ex.root);
-		}
-	}, {
-		key: "startGame2",
-		value: function startGame2() {
-			console.log("开始游戏。。。。");
-			var gw = new _GameWindow2.default();
-			this.root.append(gw.root);
-		}
-	}]);
+    var _this = _possibleConstructorReturn(this, (GameModel.__proto__ || Object.getPrototypeOf(GameModel)).call(this));
 
-	return Main;
-}();
+    _this.score = 0;
+    _this.compose = 5; //初始就为5;
+    _this.highScore = 0; //最高分
+    _this.life = 5; //默认5条命
+    _this.lianji = 0; //连击
 
-exports.default = Main;
+    var hs = _this.getCookie("highScore");
+    if (hs == "") {
+      _this.highScore = 0;
+    } else {
+      _this.highScore = parseInt(hs);
+    }
+    console.log(_this.highScore);
+    return _this;
+  }
+
+  _createClass(GameModel, [{
+    key: "getCookie",
+    value: function getCookie(c_name) {
+      if (document.cookie.length > 0) {
+        var c_start = void 0,
+            c_end = void 0;
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1) {
+          c_start = c_start + c_name.length + 1;
+          c_end = document.cookie.indexOf(";", c_start);
+          if (c_end == -1) c_end = document.cookie.length;
+          return unescape(document.cookie.substring(c_start, c_end));
+        }
+      }
+      return "";
+    }
+  }, {
+    key: "setCookie",
+    value: function setCookie(c_name, value, expiredays) {
+      var exdate = new Date();
+      exdate.setDate(exdate.getDate() + expiredays);
+      document.cookie = c_name + "=" + escape(value) + (expiredays == null ? "" : ";expires=" + exdate.toGMTString());
+    }
+  }, {
+    key: "resetGame",
+    value: function resetGame() {
+      this.score = 0;
+      this.compose = 5;
+      this.life = 5;
+      var hs = this.getCookie("highScore");
+      if (hs == "") {
+        this.highScore = 0;
+      } else {
+        this.highScore = parseInt(hs);
+      }
+    }
+
+    //合成了数，及合成值
+
+  }, {
+    key: "composeNumber",
+    value: function composeNumber(_v, _leng, isGoon) {
+      if (_leng < 2) _leng = 2;
+      if (isGoon) {
+        this.lianji++;
+      } else {
+        this.lianji = 0;
+      }
+      this.score += (_leng - 1) * (_leng - 1) * 100 + this.lianji * 500;
+      var nowCompose = _v + 1;
+      if (nowCompose > this.compose) {
+        this.compose = nowCompose;
+        _GameControl2.default.ComposeChange(this.compose);
+      }
+      _GameControl2.default.ScoreChange(this.score);
+    }
+
+    //增加或减少生命
+
+  }, {
+    key: "addOrRemoveLife",
+    value: function addOrRemoveLife(b) {
+      if (b) {
+        this.life++;
+        if (this.life > 5) this.life = 5;
+      } else {
+        this.life--;
+        if (this.life < 0) {
+          this.life = 0;
+          console.log("游戏结束");
+          _GameControl2.default.GameOver();
+          return;
+        }
+      }
+      _GameControl2.default.LifeChange(this.life);
+    }
+  }]);
+
+  return GameModel;
+}(_Event3.default);
+
+exports.default = new GameModel();
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _Main = __webpack_require__(4);
-
-var _Main2 = _interopRequireDefault(_Main);
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var main = new _Main2.default();
-(0, _jquery2.default)("body").append(main.root);
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11003,7 +11117,121 @@ var Event = function () {
 exports.default = Event;
 
 /***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _GameWindow = __webpack_require__(10);
+
+var _GameWindow2 = _interopRequireDefault(_GameWindow);
+
+var _StartWindow = __webpack_require__(16);
+
+var _StartWindow2 = _interopRequireDefault(_StartWindow);
+
+var _Explain = __webpack_require__(13);
+
+var _Explain2 = _interopRequireDefault(_Explain);
+
+var _GameControl = __webpack_require__(1);
+
+var _GameControl2 = _interopRequireDefault(_GameControl);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Main = function () {
+	function Main() {
+		var _this = this;
+
+		_classCallCheck(this, Main);
+
+		this.resetHandler = function () {
+			_this.root.empty();
+			console.log("重玩游戏。。。。");
+			var gw = new _GameWindow2.default();
+			_this.root.append(gw.root);
+		};
+
+		this.root = (0, _jquery2.default)("<div></div>");
+
+		this.root.css({
+			width: "100%",
+			height: "100%"
+		});
+
+		this.sw = new _StartWindow2.default(this.startGame.bind(this));
+		this.root.append(this.sw.root);
+		_GameControl2.default.addEventListener(_GameControl2.default.GAME_RESET, this.resetHandler);
+	}
+
+	_createClass(Main, [{
+		key: "startGame",
+		value: function startGame(d) {
+			console.log("开始教学。。。。");
+			this.ex = new _Explain2.default(this.startGame2.bind(this));
+			this.root.append(this.ex.root);
+		}
+	}, {
+		key: "startGame2",
+		value: function startGame2() {
+			console.log("开始游戏。。。。");
+			var gw = new _GameWindow2.default();
+			this.root.append(gw.root);
+		}
+	}]);
+
+	return Main;
+}();
+
+exports.default = Main;
+
+/***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _Main = __webpack_require__(6);
+
+var _Main2 = _interopRequireDefault(_Main);
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _GameControl = __webpack_require__(1);
+
+var _GameControl2 = _interopRequireDefault(_GameControl);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_GameControl2.default.addEventListener(_GameControl2.default.BACK_TOMAIN, backmainHandler);
+var main = new _Main2.default();
+(0, _jquery2.default)("body").append(main.root);
+
+function backmainHandler() {
+	(0, _jquery2.default)("body").empty();
+	main = new _Main2.default();
+	(0, _jquery2.default)("body").append(main.root);
+}
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11027,7 +11255,7 @@ var Configuration = function Configuration() {
 exports.default = new Configuration();
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11046,6 +11274,10 @@ var _jquery2 = _interopRequireDefault(_jquery);
 var _GameControl = __webpack_require__(1);
 
 var _GameControl2 = _interopRequireDefault(_GameControl);
+
+var _GameModel = __webpack_require__(4);
+
+var _GameModel2 = _interopRequireDefault(_GameModel);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11069,11 +11301,14 @@ var Map = function () {
             var i = obj.i,
                 j = obj.j;
             this.Maps[i][j]++;
+            var composeNum = this.Maps[i][j];
             var arr = this.findThree(i, j);
             if (arr == null) {
                 console.log("未查找到三连线！");
+                _GameModel2.default.addOrRemoveLife(false);
             } else {
                 _GameControl2.default.RectItemLock({ isLock: true });
+                _GameModel2.default.composeNumber(composeNum, arr.length, false);
                 this.startMove(arr, i, j);
             }
         }
@@ -11127,7 +11362,8 @@ var Map = function () {
                             isRemove: false
                         });
                     } else {
-                        this.Maps[_i][j] = Math.floor(Math.random() * this.range) + 1;
+                        var rangeNum = _GameModel2.default.compose;
+                        this.Maps[_i][j] = Math.floor(Math.random() * 5) + 1 + (rangeNum - 5); //Math.floor(Math.random()*this.range)+1;
                         _GameControl2.default.CreateItem({
                             v: this.Maps[_i][j],
                             i: _i,
@@ -11150,12 +11386,16 @@ var Map = function () {
                     var arr = this.findThree(i, j);
                     if (arr != null) {
                         _GameControl2.default.RectItemLock({ isLock: true });
+                        var composeNum = this.Maps[i][j];
+                        _GameModel2.default.composeNumber(composeNum, arr.length, true);
                         this.startMove(arr, i, j);
+                        _GameModel2.default.addOrRemoveLife(true); //第二次加载需要续一次命
                         return;
                     }
                 }
             }
             _GameControl2.default.RectItemLock({ isLock: false });
+            //console.log("查找完成，需要告知现在的分数与合成值")
         }
     }, {
         key: "findThree",
@@ -11250,18 +11490,18 @@ var Map = function () {
                     var bottom = i + 1 <= arr.length - 1 ? arr[i + 1][j] : -1;
 
                     if (c == left && left == right) {
-                        console.log("横向查找", i, j, c + ":" + left + ":" + right);
+                        //console.log("横向查找",i,j,c+":"+left+":"+right);
                         c = arr[i][j]++; // = Math.floor(Math.random()*this.range)+1;
                         if (c == top && top == bottom) {
-                            console.log("竖向查找2", i, j);
+                            //console.log("竖向查找2",i,j)
                             c = arr[i][j]++; // = Math.floor(Math.random()*this.range)+1;
                         }
                         j--;
                     } else if (c == top && top == bottom) {
-                        console.log("竖向查找", i, j, c + ":" + top + ":" + bottom);
+                        //console.log("竖向查找",i,j,c+":"+top+":"+bottom)
                         c = arr[i][j]++; // = Math.floor(Math.random()*this.range)+1;
                         if (c == left && left == right) {
-                            console.log("横向查找2", i, j);
+                            //console.log("横向查找2",i,j);
                             c = arr[i][j]++; // = Math.floor(Math.random()*this.range)+1;
                         }
                         i--;
@@ -11295,7 +11535,7 @@ var Map = function () {
 exports.default = new Map();
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11305,6 +11545,11 @@ Object.defineProperty(exports, "__esModule", {
         value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by tangshanghai on 2017/4/18.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
 var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
@@ -11313,46 +11558,118 @@ var _GameControl = __webpack_require__(1);
 
 var _GameControl2 = _interopRequireDefault(_GameControl);
 
-var _RectBox = __webpack_require__(10);
+var _GameModel = __webpack_require__(4);
+
+var _GameModel2 = _interopRequireDefault(_GameModel);
+
+var _RectBox = __webpack_require__(11);
 
 var _RectBox2 = _interopRequireDefault(_RectBox);
 
-var _Prompt = __webpack_require__(13);
+var _ScoreWindow = __webpack_require__(15);
 
-var _Prompt2 = _interopRequireDefault(_Prompt);
+var _ScoreWindow2 = _interopRequireDefault(_ScoreWindow);
 
-__webpack_require__(19);
+__webpack_require__(22);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } } /**
-                                                                                                                                                           * Created by tangshanghai on 2017/4/18.
-                                                                                                                                                           */
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var GameWindow = function () {
+        function GameWindow() {
+                var _this = this;
+
+                _classCallCheck(this, GameWindow);
+
+                this.scoreChange = function (obj) {
+                        _this.dis_score.text(obj);
+                };
+
+                this.scoreHighChange = function (obj) {
+                        _this.dis_scorehigh.text(obj);
+                };
+
+                this.composeChange = function (obj) {
+                        console.log("合成数改变", obj);
+                        _this.dis_compose.text(obj);
+                };
+
+                this.lifeChange = function (obj) {
+                        var lifeN = obj;
+                        _this.dis_life.css({
+                                "background-position-y": (5 - lifeN) * -30
+                        });
+                };
+
+                this.gameOverHandler = function () {
+                        var score = new _ScoreWindow2.default();
+                        _this.root.append(score.root);
+                };
+
+                this.root = (0, _jquery2.default)("<div></div>");
+
+                this.htmlStr = '<div id="gameWindow"><div class="gameWindow_title"><div class="title_left">最高<label>0</label></div><div class="title_right"><span>5</span></div></div><div class="gameWindow_score">0</div><div class="gameWindow_count"></div><div class="gameWindow_rect"></div></div>';
+
+                this.root.html(this.htmlStr);
+                var rectbox = new _RectBox2.default();
+                this.root.find("#gameWindow .gameWindow_rect").append(rectbox.root);
+
+                //     	this.root.find(".title_right").click((event)=>{
+                //     		let score = new ScoreWindow();
+                //     		this.root.append(score.root);
+                //     	});
+
+                this.dis_score = this.root.find(".gameWindow_score");
+                this.dis_scorehigh = this.root.find(".title_left label");
+                this.dis_compose = this.root.find(".title_right span");
+                this.dis_life = this.root.find(".gameWindow_count");
+                _GameControl2.default.addEventListener(_GameControl2.default.SCORE_CHANGE, this.scoreChange);
+                _GameControl2.default.addEventListener(_GameControl2.default.SCORE_HIGH_CHANGE, this.scoreHighChange);
+                _GameControl2.default.addEventListener(_GameControl2.default.COMPOSE_CHANGE, this.composeChange);
+                _GameControl2.default.addEventListener(_GameControl2.default.LIFE_CHANGE, this.lifeChange);
+                _GameControl2.default.addEventListener(_GameControl2.default.GAME_OVER, this.gameOverHandler);
+
+                this.initData();
+        }
+
+        //初始化数据
 
 
-var GameWindow = function GameWindow() {
-        var _this = this;
+        _createClass(GameWindow, [{
+                key: "initData",
+                value: function initData() {
+                        this.dis_score.text(_GameModel2.default.score);
+                        this.dis_scorehigh.text(_GameModel2.default.highScore);
+                        this.dis_compose.text(_GameModel2.default.compose);
+                        this.dis_life.css({
+                                "background-position-y": (5 - _GameModel2.default.life) * -30
+                        });
+                }
 
-        _classCallCheck(this, GameWindow);
+                //分数改变
 
-        this.root = (0, _jquery2.default)("<div></div>");
 
-        this.htmlStr = '<div id="gameWindow"><div class="gameWindow_title"><div class="title_left">                最高13903</div><div class="title_right"><span>5</span></div></div><div class="gameWindow_score">            1232131</div><div class="gameWindow_count"></div><div class="gameWindow_rect"></div></div>	';
+                //最高分数改变
 
-        this.root.html(this.htmlStr);
-        var rectbox = new _RectBox2.default();
-        this.root.find("#gameWindow .gameWindow_rect").append(rectbox.root);
 
-        this.root.find(".title_right").click(function (event) {
-                var prompt = new _Prompt2.default();
-                _this.root.append(prompt.root);
-        });
-};
+                //合成数改变
+
+
+                //生命改变
+
+
+                //游戏结束
+
+        }]);
+
+        return GameWindow;
+}();
 
 exports.default = GameWindow;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11368,7 +11685,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _Map = __webpack_require__(8);
+var _Map = __webpack_require__(9);
 
 var _Map2 = _interopRequireDefault(_Map);
 
@@ -11376,7 +11693,7 @@ var _GameControl = __webpack_require__(1);
 
 var _GameControl2 = _interopRequireDefault(_GameControl);
 
-var _RectItem = __webpack_require__(11);
+var _RectItem = __webpack_require__(12);
 
 var _RectItem2 = _interopRequireDefault(_RectItem);
 
@@ -11428,7 +11745,7 @@ var RectBox = function () {
 exports.default = RectBox;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11447,13 +11764,17 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _Configuration = __webpack_require__(7);
+var _Configuration = __webpack_require__(8);
 
 var _Configuration2 = _interopRequireDefault(_Configuration);
 
 var _GameControl = __webpack_require__(1);
 
 var _GameControl2 = _interopRequireDefault(_GameControl);
+
+var _GameModel = __webpack_require__(4);
+
+var _GameModel2 = _interopRequireDefault(_GameModel);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11585,6 +11906,8 @@ var RectItem = function () {
         key: "removeSelf",
         value: function removeSelf() {
             _GameControl2.default.removeEventListener(_GameControl2.default.RECTITEM_LOCK, this.lockHandler.bind(this));
+            _GameControl2.default.removeEventListener(_GameControl2.default.MOVE_TO, this.moveToHandler.bind(this));
+            _GameControl2.default.removeEventListener(_GameControl2.default.UPDATE_ITEM, this.updateItemHandler.bind(this));
             this.root.remove();
             console.log("asdfasfasfasfasfafdd");
         }
@@ -11596,7 +11919,7 @@ var RectItem = function () {
 exports.default = RectItem;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11610,7 +11933,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-__webpack_require__(20);
+__webpack_require__(23);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11622,7 +11945,7 @@ var Explain = function Explain(_callback) {
 	_classCallCheck(this, Explain);
 
 	this.root = (0, _jquery2.default)("<div></div>");
-	var html = '<div class="Explain_imgbox"><img class="Explain_img" src="./images/1.png"/></div><div class="Explain_level1"></div><div class="Explain_level2"></div><div class="Explain_level3"></div><div class="Explain_level4"></div><div class="Explain_close"></div>';
+	var html = '<div class="Explain_imgbox"><img class="Explain_img" src="./images/1.png"/></div><div class="Explain_level1 Explain_movie"></div><div class="Explain_level2 Explain_movie"></div><div class="Explain_level3 Explain_movie"></div><div class="Explain_level4 Explain_movie"></div><div class="Explain_close"></div>';
 
 	this.root.append(html);
 	this.root.addClass("Explain");
@@ -11662,53 +11985,6 @@ var Explain = function Explain(_callback) {
 exports.default = Explain;
 
 /***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-__webpack_require__(21);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Prompt = function Prompt(_callback) {
-    var _this = this;
-
-    _classCallCheck(this, Prompt);
-
-    this.root = (0, _jquery2.default)("<div></div>");
-
-    this.htmlStr = '<div class="content"><div class="titlebox"><img src="./images/prompt_title.png"/><div class="icon">得分</div><span></span></div><div class="content2"></div><div class="bottom"><div class="okBtn"></div></div></div>';
-
-    this.root.html(this.htmlStr);
-    this.root.addClass("Prompt");
-
-    this.titleBox = this.root.find(".titlebox");
-    this.content2 = this.root.find(".content2");
-    this.bottom = this.root.find(".bottom");
-
-    this.root.find(".btn_start").click(function (event) {
-        _this.root.remove();
-        if (_callback) {
-            _callback();
-        }
-    });
-};
-
-exports.default = Prompt;
-
-/***/ }),
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11716,6 +11992,154 @@ exports.default = Prompt;
 
 
 Object.defineProperty(exports, "__esModule", {
+        value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+__webpack_require__(24);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Prompt = function () {
+        function Prompt(_callback) {
+                var _this = this;
+
+                _classCallCheck(this, Prompt);
+
+                this.root = (0, _jquery2.default)("<div></div>");
+
+                var htmlStr = '<div class="content"><div class="titlebox"><img src="./images/prompt_title.png"/><div class="icon">得分</div><span></span></div><div class="content2"></div><div class="bottom"><div class="okBtn"></div></div></div>';
+
+                this.root.html(htmlStr);
+                this.root.addClass("Prompt");
+
+                this.titleBox = this.root.find(".titlebox");
+                this.content2 = this.root.find(".content2");
+                this.bottom = this.root.find(".bottom");
+                this.callBack = _callback;
+
+                //let okBtn = this.bottom.find("okBtn");
+                //      this.bottom.find("okBtn").click(this.closeHandler);
+                this.root.find(".okBtn").click(function (event) {
+                        _this.closeWindow();
+                });
+        }
+
+        _createClass(Prompt, [{
+                key: "closeWindow",
+                value: function closeWindow() {
+                        this.root.remove();
+                }
+        }]);
+
+        return Prompt;
+}();
+
+exports.default = Prompt;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _Prompt2 = __webpack_require__(14);
+
+var _Prompt3 = _interopRequireDefault(_Prompt2);
+
+var _GameModel = __webpack_require__(4);
+
+var _GameModel2 = _interopRequireDefault(_GameModel);
+
+var _GameControl = __webpack_require__(1);
+
+var _GameControl2 = _interopRequireDefault(_GameControl);
+
+__webpack_require__(25);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ScoreWindow = function (_Prompt) {
+	_inherits(ScoreWindow, _Prompt);
+
+	function ScoreWindow(_callback) {
+		_classCallCheck(this, ScoreWindow);
+
+		var _this = _possibleConstructorReturn(this, (ScoreWindow.__proto__ || Object.getPrototypeOf(ScoreWindow)).call(this, _callback));
+
+		_this.init();
+		return _this;
+	}
+
+	_createClass(ScoreWindow, [{
+		key: "init",
+		value: function init() {
+			var _this2 = this;
+
+			var htmlStr = '<div class="score">200032</div><div class="number">10</div><div class="btnbox"><div class="mainbtn"></div><div class="resetbtn"></div></div>';
+			this.content2.append(htmlStr);
+
+			var hs = _GameModel2.default.getCookie("highScore");
+			hs = hs == "" ? 0 : parseInt(hs);
+			if (_GameModel2.default.score > hs) {
+				_GameModel2.default.setCookie("highScore", _GameModel2.default.score);
+				//console.log("覆盖"+GameModel.getCookie("highScore"));
+			}
+			//console.log("最后"+GameModel.getCookie("highScore"));
+			this.content2.find(".score").text(_GameModel2.default.score);
+			this.content2.find(".number").text(_GameModel2.default.compose);
+
+			this.content2.find(".mainbtn").click(function () {
+				_GameModel2.default.resetGame();
+				_this2.closeWindow();
+				_GameControl2.default.backToMain();
+			});
+
+			this.content2.find(".resetbtn").click(function () {
+				_GameModel2.default.resetGame();
+				_this2.closeWindow();
+				_GameControl2.default.resetGame();
+			});
+		}
+	}]);
+
+	return ScoreWindow;
+}(_Prompt3.default);
+
+exports.default = ScoreWindow;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
@@ -11723,7 +12147,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-__webpack_require__(22);
+__webpack_require__(26);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11752,34 +12176,6 @@ var StartWindow = function StartWindow(_callback) {
 exports.default = StartWindow;
 
 /***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "#gameWindow {\r\n\twidth: 100%;\r\n\theight: 100%;\r\n\toverflow: hidden;\r\n}\r\n\r\n#gameWindow .gameWindow_title {\r\n\twidth: 100%;\r\n\theight: 40px;\r\n\tmargin-top: 10px;\r\n}\r\n\r\n#gameWindow .title_left {\r\n\twidth: 100px;\r\n\theight: 20px;\r\n\tfloat: left;\r\n\tmargin: 10px;\r\n\tcolor: #b7dbf6;\r\n}\r\n\r\n#gameWindow .title_right {\r\n\twidth: 130px;\r\n\theight: 46px;\r\n\tfloat: right;\r\n\tmargin-right: 10px;\r\n\tbackground: url(" + __webpack_require__(26) + ");\r\n\tbackground-size: contain;\r\n\tcolor: #168dda;\r\n\tfont-weight: bold;\r\n}\r\n\r\n#gameWindow .title_right span {\r\n\tdisplay: block;\r\n\twidth: 20px;\r\n\theight: 40px;\r\n\tfont-size: 20px;\r\n\tmargin: 0 auto;\r\n\tline-height: 40px;\r\n}\r\n\r\n#gameWindow .gameWindow_score {\r\n\twidth: 150px;\r\n\theight: 40px;\r\n\tmargin: 10px auto;\r\n\tfont-size: 40px;\r\n\ttext-align: center;\r\n\tfont-weight: bold;\r\n    color: #fe8a8a;\r\n}\r\n\r\n#gameWindow .gameWindow_count {\r\n\twidth: 300px;\r\n\theight: 30px;\r\n\tmargin: 0 auto;\r\n\tbackground: url(" + __webpack_require__(25) + ");\r\n}\r\n\r\n\r\n#gameWindow .gameWindow_rect {\r\n\twidth: 306px;\r\n\theight: 306px;\r\n\tbackground-color: #eeeeec;\r\n\tmargin: 10px auto;\r\n\tposition: relative;\r\n\tborder-radius: 5px;\r\n}\r\n\r\n.RectItem{\r\n\tposition:absolute;\r\n\tleft: 0;\r\n\ttop: 0;\r\n\tz-index: 1;\r\n\ttext-align: center;\r\n\tline-height: 60px;\r\n    width: 60px;\r\n    height: 60px;\r\n    /*background: #000000;*/\r\n}\r\n\r\n.RectItem_content{\r\n\tcolor: #ffffff;\r\n    font-size: 30px;\r\n    font-weight: bold;\r\n\twidth: 56px;\r\n\theight: 56px;\r\n\tposition: absolute;\r\n\ttop:5px;\r\n\tleft:5px;\r\n\tborder-top-left-radius: 15px;\r\n    border-top-right-radius: 15px;\r\n    border-bottom-right-radius: 20px;\r\n    border-bottom-left-radius: 20px;\r\n}\r\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, ".Explain{\r\n\twidth:100%;\r\n\theight: 100%;\r\n\t/*background: url(images/1.png);*/\r\n\tposition: relative;\r\n}\r\n\r\n.Explain_imgbox{\r\n\twidth:100%;\r\n\theight: 100%;\r\n}\r\n\r\n.Explain_imgbox img{\r\n\twidth:100%;\r\n\theight:auto;\r\n}\r\n\r\n.Explain_level1{\r\n\tposition: absolute;\r\n\ttop: 220px;\r\n    left: 130px;\r\n    width: 60px;\r\n    height: 60px;\r\n\t/*background:#A7E0FE;*/\r\n}\r\n\r\n.Explain_level2{\r\n\tposition: absolute;\r\n\ttop: 220px;\r\n    left: 130px;\r\n    width: 60px;\r\n    height: 60px;\r\n\t/*background:#BBCCDD;*/\r\n\tdisplay: none;\r\n}\r\n\r\n.Explain_level3{\r\n\tposition: absolute;\r\n\ttop: 220px;\r\n    left: 130px;\r\n    width: 60px;\r\n    height: 60px;\r\n\t/*background:#EEFFAA;*/\r\n\tdisplay: none;\r\n}\r\n\r\n.Explain_level4{\r\n\tposition: absolute;\r\n\ttop: 380px;\r\n    left: 80px;\r\n    width: 152px;\r\n    height: 46px;\r\n\t/*background:#CCDDAA;*/\r\n\tdisplay: none;\r\n}\r\n\r\n.Explain_close{\r\n\tposition: absolute;\r\n    right: 16px;\r\n    top: 19px;\r\n    width: 20px;\r\n    height: 20px;\r\n    /*background: #A7E0FE;*/\r\n}\r\n", ""]);
-
-// exports
-
-
-/***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11788,7 +12184,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, ".Prompt{\r\n\twidth: 100%;\r\n\theight: 100%;\r\n\tposition: fixed;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tz-index: 99999;\r\n\tbackground-color: rgba(0,0,0,0.5);\r\n}\r\n\r\n.Prompt .content{\r\n\twidth: 300px;\r\n\theight: 300px;\r\n\tposition: absolute;\r\n\tleft:50%;\r\n\ttop:50%;\r\n\tmargin-left: -150px;\r\n\tmargin-top:-150px;\r\n\tbackground-color:#f6f2f1;\r\n\tborder-radius: 10px;\r\n}\r\n\r\n.Prompt .content .titlebox{\r\n\twidth: 100%;\r\n\theight: 60px;\r\n\tposition: relative;\r\n\t/*background: url(../../../images/prompt_title.png);\r\n\tbackground-size: contain;*/\r\n\t/*background-color:#A7E0FE;*/\r\n}\r\n\r\n.Prompt .content .titlebox img{\r\n\twidth: 310px;\r\n    height: auto;\r\n    position: absolute;\r\n    left: -5px;\r\n    top: -27px;\r\n}\r\n\r\n.Prompt .content .titlebox .icon{\r\n\twidth: 50px;\r\n    height: 30px;\r\n    margin:0 auto;\r\n    font-weight: bold;\r\n    font-size: 30px;\r\n    \r\n}\r\n.Prompt .content .content2{\r\n\twidth: 100%;\r\n\theight: 160px;\r\n\tbackground-color:#FE8A8A;\r\n}\r\n\r\n.Prompt .content .bottom{\r\n\twidth: 100%;\r\n\theight: 30px;\r\n\tbackground-color:#EEEEEC;\r\n}\r\n\r\n.Prompt .content .bottom .okBtn{\r\n\twidth: 149px;\r\n\theight: 44px;\r\n\tbackground: url(" + __webpack_require__(24) + ");\r\n\tbackground-size: contain;\r\n}", ""]);
+exports.push([module.i, "#gameWindow {\r\n\twidth: 100%;\r\n\theight: 100%;\r\n\toverflow: hidden;\r\n}\r\n\r\n#gameWindow .gameWindow_title {\r\n\twidth: 100%;\r\n\theight: 40px;\r\n\tmargin-top: 10px;\r\n}\r\n\r\n#gameWindow .title_left {\r\n\twidth: 100px;\r\n\theight: 20px;\r\n\tfloat: left;\r\n\tmargin: 10px;\r\n\tcolor: #b7dbf6;\r\n}\r\n\r\n#gameWindow .title_right {\r\n\twidth: 130px;\r\n\theight: 46px;\r\n\tfloat: right;\r\n\tmargin-right: 10px;\r\n\tbackground: url(" + __webpack_require__(32) + ");\r\n\tbackground-size: contain;\r\n\tcolor: #168dda;\r\n\tfont-weight: bold;\r\n}\r\n\r\n#gameWindow .title_right span {\r\n\tdisplay: block;\r\n\twidth: 20px;\r\n\theight: 40px;\r\n\tfont-size: 20px;\r\n\tmargin: 0 auto;\r\n\tline-height: 40px;\r\n}\r\n\r\n#gameWindow .gameWindow_score {\r\n\twidth: 150px;\r\n\theight: 40px;\r\n\tmargin: 10px auto;\r\n\tfont-size: 40px;\r\n\ttext-align: center;\r\n\tfont-weight: bold;\r\n    color: #fe8a8a;\r\n}\r\n\r\n#gameWindow .gameWindow_count {\r\n\twidth: 300px;\r\n\theight: 30px;\r\n\tmargin: 0 auto;\r\n\tbackground: url(" + __webpack_require__(30) + ");\r\n}\r\n\r\n\r\n#gameWindow .gameWindow_rect {\r\n\twidth: 306px;\r\n\theight: 306px;\r\n\tbackground-color: #eeeeec;\r\n\tmargin: 10px auto;\r\n\tposition: relative;\r\n\tborder-radius: 5px;\r\n}\r\n\r\n.RectItem{\r\n\tposition:absolute;\r\n\tleft: 0;\r\n\ttop: 0;\r\n\tz-index: 1;\r\n\ttext-align: center;\r\n\tline-height: 60px;\r\n    width: 60px;\r\n    height: 60px;\r\n    /*background: #000000;*/\r\n}\r\n\r\n.RectItem_content{\r\n\tcolor: #ffffff;\r\n    font-size: 30px;\r\n    font-weight: bold;\r\n\twidth: 56px;\r\n\theight: 56px;\r\n\tposition: absolute;\r\n\ttop:5px;\r\n\tleft:5px;\r\n\tborder-top-left-radius: 15px;\r\n    border-top-right-radius: 15px;\r\n    border-bottom-right-radius: 20px;\r\n    border-bottom-left-radius: 20px;\r\n}\r\n", ""]);
 
 // exports
 
@@ -11802,7 +12198,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, ".StartWindow{\r\n\tposition: relative;\r\n\twidth:100%;\r\n\theight: 100%;\r\n}\r\n\r\n.StartWindow .imgBg{\r\n\twidth: 100%;\r\n\theight: auto;\r\n}\r\n.StartWindow .btn_start{\r\n\tposition:absolute;\r\n\ttop: 284px;\r\n    left: 78px;\r\n    width: 156px;\r\n    height: 82px;\r\n\tbackground: #168DDA;\r\n}\r\n", ""]);
+exports.push([module.i, ".Explain{\r\n\twidth:100%;\r\n\theight: 100%;\r\n\t/*background: url(images/1.png);*/\r\n\tposition: relative;\r\n}\r\n\r\n.Explain_imgbox{\r\n\twidth:100%;\r\n\theight: 100%;\r\n}\r\n\r\n.Explain_imgbox img{\r\n\twidth:100%;\r\n\theight:auto;\r\n}\r\n\r\n.Explain_movie{\r\n\tborder-radius: 5px;\r\n\tbackground:rgba(0,0,0,0.5);\r\n\tanimation: pauseMovie 2s infinite linear;\r\n    -moz-animation: pauseMovie 2s infinite linear;\t/* Firefox */\r\n    -webkit-animation: pauseMovie 2s infinite linear;\t/* Safari 和 Chrome */\r\n    -o-animation: pauseMovie 2s infinite linear;\t/* Opera */\r\n}\r\n.Explain_level1{\r\n\tposition: absolute;\r\n\ttop: 220px;\r\n    left: 130px;\r\n    width: 60px;\r\n    height: 60px;\r\n\t/*background:#A7E0FE;*/\r\n}\r\n\r\n.Explain_level2{\r\n\tposition: absolute;\r\n\ttop: 220px;\r\n    left: 130px;\r\n    width: 60px;\r\n    height: 60px;\r\n\t/*background:#BBCCDD;*/\r\n\tdisplay: none;\r\n}\r\n\r\n.Explain_level3{\r\n\tposition: absolute;\r\n\ttop: 220px;\r\n    left: 130px;\r\n    width: 60px;\r\n    height: 60px;\r\n\t/*background:#EEFFAA;*/\r\n\tdisplay: none;\r\n}\r\n\r\n.Explain_level4{\r\n\tposition: absolute;\r\n\ttop: 380px;\r\n    left: 80px;\r\n    width: 152px;\r\n    height: 46px;\r\n\t/*background:#CCDDAA;*/\r\n\tdisplay: none;\r\n}\r\n\r\n.Explain_close{\r\n\tposition: absolute;\r\n    right: 16px;\r\n    top: 19px;\r\n    width: 20px;\r\n    height: 20px;\r\n    /*background: #A7E0FE;*/\r\n}\r\n\r\n\r\n@keyframes pauseMovie\r\n{\r\n    0%   {\r\n        opacity: 0;\r\n    }\r\n    50%  {\r\n        opacity: 1;\r\n    }\r\n    100% {\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@-moz-keyframes pauseMovie /* Firefox */\r\n{\r\n    0%   {\r\n        opacity: 0;\r\n    }\r\n    50%  {\r\n        opacity: 1;\r\n    }\r\n    100% {\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes pauseMovie /* Safari 和 Chrome */\r\n{\r\n    0%   {\r\n        opacity: 0;\r\n    }\r\n    50%  {\r\n        opacity: 1;\r\n    }\r\n    100% {\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@-o-keyframes pauseMovie /* Opera */\r\n{\r\n    0%   {\r\n        opacity: 0;\r\n    }\r\n    50%  {\r\n        opacity: 1;\r\n    }\r\n    100% {\r\n        opacity: 0;\r\n    }\r\n}", ""]);
 
 // exports
 
@@ -11811,10 +12207,52 @@ exports.push([module.i, ".StartWindow{\r\n\tposition: relative;\r\n\twidth:100%;
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
+exports = module.exports = __webpack_require__(2)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".Prompt{\r\n\twidth: 100%;\r\n\theight: 100%;\r\n\tposition: fixed;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tz-index: 99999;\r\n\tbackground-color: rgba(0,0,0,0.5);\r\n}\r\n\r\n.Prompt .content{\r\n\twidth: 300px;\r\n\theight: 300px;\r\n\tposition: absolute;\r\n\tleft:50%;\r\n\ttop:50%;\r\n\tmargin-left: -150px;\r\n\tmargin-top:-150px;\r\n\tbackground-color:#f6f2f1;\r\n\tborder-radius: 10px;\r\n}\r\n\r\n.Prompt .content .titlebox{\r\n\twidth: 100%;\r\n\theight: 60px;\r\n\tposition: absolute;\r\n\ttop: 0px;\r\n\t/*background: url(../../../images/prompt_title.png);\r\n\tbackground-size: contain;*/\r\n\t/*background-color:#A7E0FE;*/\r\n}\r\n\r\n.Prompt .content .titlebox img{\r\n\twidth: 310px;\r\n    height: auto;\r\n    position: absolute;\r\n    left: -5px;\r\n    top: -27px;\r\n}\r\n\r\n.Prompt .content .titlebox .icon{\r\n\twidth: 60px;\r\n    height: 30px;\r\n    margin: 0 auto;\r\n    font-weight: bold;\r\n    font-size: 30px;\r\n    position: absolute;\r\n    z-index: 2;\r\n    color: #ffffff;\r\n    left: 50%;\r\n    margin-left: -30px;\r\n    top: -26px;\r\n    \r\n}\r\n.Prompt .content .content2{\r\n\tposition: absolute;\r\n\ttop: 60px;\r\n\tbottom: 60px;\r\n\twidth: 100%;\r\n\theight: auto;\r\n\t/*background-color:#FE8A8A;*/\r\n}\r\n\r\n.Prompt .content .bottom{\r\n\tposition: absolute;\r\n\tbottom: 0px;\r\n\twidth: 100%;\r\n\theight: 60px;\r\n\t/*background-color:#EEEEEC;*/\r\n}\r\n\r\n.Prompt .content .bottom .okBtn{\r\n\twidth: 149px;\r\n\theight: 43px;\r\n\tbackground: url(" + __webpack_require__(29) + ");\r\n\tbackground-size: contain;\r\n\tmargin: 0 auto;\r\n}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".Prompt .score{\r\n\twidth: 100%;\r\n\theight: 30px;\r\n\t/*background: #aa3423;*/\r\n\ttext-align: center;\r\n\tcolor: #02ad00;\r\n\tfont-size: 25px;\r\n\tline-height: 30px;\r\n\t\r\n}\r\n\r\n.Prompt .number{\r\n\tcolor: #ffffff;\r\n    font-size: 30px;\r\n    font-weight: bold;\r\n\twidth: 50px;\r\n\theight: 50px;\r\n\tmargin: 18px auto;\r\n\tborder-top-left-radius: 15px;\r\n    border-top-right-radius: 15px;\r\n    border-bottom-right-radius: 20px;\r\n    border-bottom-left-radius: 20px;\r\n    text-align: center;\r\n    line-height: 50px;\r\n    background: #168DDA;\r\n}\r\n\r\n.Prompt .btnbox{\r\n\twidth: 170px;\r\n    height: 40px;\r\n\tmargin: 0 auto;\r\n}\r\n\r\n.Prompt .mainbtn{\r\n\twidth: 68px;\r\n\theight: 39px;\r\n\tfloat: left;\r\n\tbackground-size: contain;\r\n\tbackground-image: url(" + __webpack_require__(28) + ");\r\n}\r\n\r\n.Prompt .resetbtn{\r\n\twidth: 68px;\r\n\theight: 39px;\r\n\tfloat: right;\r\n\tbackground-size: contain;\r\n\tbackground-image: url(" + __webpack_require__(31) + ");\r\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".StartWindow{\r\n\tposition: relative;\r\n\twidth:100%;\r\n\theight: 100%;\r\n}\r\n\r\n.StartWindow .imgBg{\r\n\twidth: 100%;\r\n\theight: auto;\r\n}\r\n.StartWindow .btn_start{\r\n\tposition:absolute;\r\n\ttop: 284px;\r\n    left: 78px;\r\n    width: 156px;\r\n    height: 82px;\r\n\t/*background: #168DDA;*/\r\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(15);
+var content = __webpack_require__(17);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -11839,13 +12277,13 @@ if(false) {
 }
 
 /***/ }),
-/* 20 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(16);
+var content = __webpack_require__(18);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -11870,13 +12308,13 @@ if(false) {
 }
 
 /***/ }),
-/* 21 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(17);
+var content = __webpack_require__(19);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -11901,13 +12339,44 @@ if(false) {
 }
 
 /***/ }),
-/* 22 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(18);
+var content = __webpack_require__(20);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(3)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!./ScoreWindow.css", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!./ScoreWindow.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(21);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -11932,7 +12401,7 @@ if(false) {
 }
 
 /***/ }),
-/* 23 */
+/* 27 */
 /***/ (function(module, exports) {
 
 
@@ -12027,19 +12496,31 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 24 */
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/mainbtn.png";
+
+/***/ }),
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "images/okBtn.png";
 
 /***/ }),
-/* 25 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "images/progress.png";
 
 /***/ }),
-/* 26 */
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/resetbtn.png";
+
+/***/ }),
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "images/star_bg.png";

@@ -1,0 +1,48 @@
+.Prompt .score{
+	width: 100%;
+	height: 30px;
+	/*background: #aa3423;*/
+	text-align: center;
+	color: #02ad00;
+	font-size: 25px;
+	line-height: 30px;
+	
+}
+
+.Prompt .number{
+	color: #ffffff;
+    font-size: 30px;
+    font-weight: bold;
+	width: 50px;
+	height: 50px;
+	margin: 18px auto;
+	border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    text-align: center;
+    line-height: 50px;
+    background: #168DDA;
+}
+
+.Prompt .btnbox{
+	width: 170px;
+    height: 40px;
+	margin: 0 auto;
+}
+
+.Prompt .mainbtn{
+	width: 68px;
+	height: 39px;
+	float: left;
+	background-size: contain;
+	background-image: url(../../../images/mainbtn.png);
+}
+
+.Prompt .resetbtn{
+	width: 68px;
+	height: 39px;
+	float: right;
+	background-size: contain;
+	background-image: url(../../../images/resetbtn.png);
+}
